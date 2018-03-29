@@ -44,6 +44,12 @@
 						{{_ "Send_request_on_agent_message"}}
 					</label>
 				</div>
+				<div class="input-line">
+					<label for="sendOnRegisterGuest">
+						<input type="checkbox" name="sendOnRegisterGuest" id="sendOnRegisterGuest" value="1" checked="{{sendOnRegisterGuestChecked}}">
+						{{_ "Send_request_on_register_guest"}}
+					</label>
+				</div>
 				<div class="submit">
 					<button class="button danger reset-settings" type="button"><i class="icon-ccw"></i>{{_ "Reset"}}</button>
 					<button class="button secondary test" type="button" disabled="{{disableTest}}">{{_ "Send_Test"}}</button>

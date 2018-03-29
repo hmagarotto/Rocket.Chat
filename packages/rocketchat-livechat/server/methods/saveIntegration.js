@@ -30,6 +30,10 @@ Meteor.methods({
 			RocketChat.settings.updateById('Livechat_webhook_on_agent_message', !!values['Livechat_webhook_on_agent_message']);
 		}
 
+		if (typeof values['Livechat_webhook_on_register_guest'] !== 'undefined') {
+			RocketChat.settings.updateById('Livechat_webhook_on_register_guest', !!values['Livechat_webhook_on_register_guest']);
+		}
+
 		return;
 	}
 });
