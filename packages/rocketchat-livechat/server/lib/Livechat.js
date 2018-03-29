@@ -173,6 +173,13 @@ RocketChat.Livechat = {
 
 		LivechatVisitors.updateById(userId, updateUser);
 
+		const visitor = LivechatVisitors.getById(userId);
+		if (visitor) {
+			Meteor.defer(() => {
+				RocketChat.callbacks.run('livechat.registerGuest', visitor);
+			});
+		}
+
 		return userId;
 	},
 	setDepartmentForGuest({ token, department } = {}) {

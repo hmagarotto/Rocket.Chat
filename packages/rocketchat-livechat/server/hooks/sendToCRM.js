@@ -1,3 +1,5 @@
+import UAParser from 'ua-parser-js';
+
 function sendToCRM(type, room, includeMessages = true) {
 	const postData = RocketChat.Livechat.getLivechatRoomGuestInfo(room);
 
@@ -89,3 +91,38 @@ RocketChat.callbacks.add('livechat.leadCapture', (room) => {
 	}
 	return sendToCRM('LeadCapture', room, false);
 }, RocketChat.callbacks.priority.MEDIUM, 'livechat-send-crm-lead-capture');
+
+RocketChat.callbacks.add('livechat.registerGuest', function(visitor) {
+	if (!RocketChat.settings.get('Livechat_webhook_on_register_guest')) {
+		return visitor;
+	}
+
+	const ua = new UAParser();
+	ua.setUA(visitor.userAgent);
+
+	const postData = {
+		type: 'VisitorRegister',
+		visitor: {
+			_id: visitor._id,
+			token: visitor.token,
+			name: visitor.name,
+			username: visitor.username,
+			email: null,
+			phone: null,
+			department: visitor.department,
+			ip: visitor.ip,
+			os: ua.getOS().name && (`${ ua.getOS().name } ${ ua.getOS().version }`),
+			browser: ua.getBrowser().name && (`${ ua.getBrowser().name } ${ ua.getBrowser().version }`),
+			customFields: visitor.livechatData
+		}
+	};
+
+	if (visitor.visitorEmails && visitor.visitorEmails.length > 0) {
+		postData.visitor.email = visitor.visitorEmails;
+	}
+	if (visitor.phone && visitor.phone.length > 0) {
+		postData.visitor.phone = visitor.phone;
+	}
+
+	RocketChat.Livechat.sendRequest(postData);
+}, RocketChat.callbacks.priority.MEDIUM, 'livechat-send-crm-register');
