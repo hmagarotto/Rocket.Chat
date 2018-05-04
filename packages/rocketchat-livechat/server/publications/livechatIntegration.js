@@ -16,7 +16,7 @@ Meteor.publish('livechat:integration', function() {
 		'Livechat_webhook_on_offline_msg',
 		'Livechat_webhook_on_visitor_message',
 		'Livechat_webhook_on_agent_message',
-		'Livechat_webhook_on_register_guest'
+		'Livechat_webhook_on_register_visitor'
 	]).observeChanges({
 		added(id, fields) {
 			self.added('livechatIntegration', id, fields);

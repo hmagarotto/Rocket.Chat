@@ -176,7 +176,7 @@ RocketChat.Livechat = {
 		const visitor = LivechatVisitors.getById(userId);
 		if (visitor) {
 			Meteor.defer(() => {
-				RocketChat.callbacks.run('livechat.registerGuest', visitor);
+				RocketChat.callbacks.run('livechat.registerVisitor', visitor);
 			});
 		}
 

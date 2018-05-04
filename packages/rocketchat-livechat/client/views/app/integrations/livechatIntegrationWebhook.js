@@ -31,8 +31,8 @@ Template.livechatIntegrationWebhook.helpers({
 		const setting = LivechatIntegration.findOne('Livechat_webhook_on_agent_message');
 		return setting && setting.value;
 	},
-	sendOnRegisterGuestChecked() {
-		const setting = LivechatIntegration.findOne('Livechat_webhook_on_register_guest');
+	sendOnRegisterVisitorChecked() {
+		const setting = LivechatIntegration.findOne('Livechat_webhook_on_register_visitor');
 		return setting && setting.value;
 	}
 });
@@ -76,7 +76,7 @@ Template.livechatIntegrationWebhook.events({
 		const webhookOnOfflineMsg = LivechatIntegration.findOne('Livechat_webhook_on_offline_msg');
 		const webhookOnVisitorMessage = LivechatIntegration.findOne('Livechat_webhook_on_visitor_message');
 		const webhookOnAgentMessage = LivechatIntegration.findOne('Livechat_webhook_on_agent_message');
-		const webhookOnRegisterGuest = LivechatIntegration.findOne('Livechat_webhook_on_register_guest');
+		const webhookOnRegisterVisitor = LivechatIntegration.findOne('Livechat_webhook_on_register_visitor');
 
 		instance.$('#webhookUrl').val(webhookUrl && webhookUrl.value);
 		instance.$('#secretToken').val(secretToken && secretToken.value);
@@ -84,7 +84,7 @@ Template.livechatIntegrationWebhook.events({
 		instance.$('#sendOnOffline').get(0).checked = webhookOnOfflineMsg && webhookOnOfflineMsg.value;
 		instance.$('#sendOnVisitorMessage').get(0).checked = webhookOnVisitorMessage && webhookOnVisitorMessage.value;
 		instance.$('#sendOnAgentMessage').get(0).checked = webhookOnAgentMessage && webhookOnAgentMessage.value;
-		instance.$('#sendOnRegisterGuest').get(0).checked = webhookOnRegisterGuest && webhookOnRegisterGuest.value;
+		instance.$('#sendOnRegisterVisitor').get(0).checked = webhookOnRegisterVisitor && webhookOnRegisterVisitor.value;
 
 		instance.disableTest.set(!webhookUrl || _.isEmpty(webhookUrl.value));
 	},
@@ -98,7 +98,7 @@ Template.livechatIntegrationWebhook.events({
 			'Livechat_webhook_on_offline_msg': instance.$('#sendOnOffline').get(0).checked,
 			'Livechat_webhook_on_visitor_message': instance.$('#sendOnVisitorMessage').get(0).checked,
 			'Livechat_webhook_on_agent_message': instance.$('#sendOnAgentMessage').get(0).checked,
-			'Livechat_webhook_on_register_guest': instance.$('#sendOnRegisterGuest').get(0).checked
+			'Livechat_webhook_on_register_visitor': instance.$('#sendOnRegisterVisitor').get(0).checked
 		};
 		Meteor.call('livechat:saveIntegration', settings, (err) => {
 			if (err) {

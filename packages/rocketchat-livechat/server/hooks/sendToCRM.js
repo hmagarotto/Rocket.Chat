@@ -92,8 +92,8 @@ RocketChat.callbacks.add('livechat.leadCapture', (room) => {
 	return sendToCRM('LeadCapture', room, false);
 }, RocketChat.callbacks.priority.MEDIUM, 'livechat-send-crm-lead-capture');
 
-RocketChat.callbacks.add('livechat.registerGuest', function(visitor) {
-	if (!RocketChat.settings.get('Livechat_webhook_on_register_guest')) {
+RocketChat.callbacks.add('livechat.registerVisitor', function(visitor) {
+	if (!RocketChat.settings.get('Livechat_webhook_on_register_visitor')) {
 		return visitor;
 	}
 
